@@ -4,14 +4,16 @@
 \iffalse
 %</internal>
 %<*readme>
-|
-------------------:| ------------------------------------------------------
-ptolemaicastronomy:| Diagrams of sphere models for variably strict conditionals (Lewis counterfactuals)
-            Author:| Richard Zach
-            E-mail:| rzach@ucalgary.ca
-           License:| Released under the LaTeX Project Public License v1.3c or later
-               See:| http://www.latex-project.org/lppl.txt
+ptolemaicastronomy
+==================
 
+Diagrams of sphere models for variably strict conditionals (Lewis
+counterfactuals)
+
+Author: Richard Zach
+E-mail: rzach@ucalgary.ca
+License: Released under the LaTeX Project Public License v1.3c or later
+See: http://www.latex-project.org/lppl.txt
 
 David K. Lewis (Counterfactuals, Blackwell 1973) introduced a sphere
 semantics for counterfactual conditionals. He jokingly referred to the
@@ -38,12 +40,30 @@ See https://github.com/rzach/ptolemaic-astronomy
 \keepsilent
 \askforoverwritefalse
 \preamble
-------------------:| ------------------------------------------------------
-ptolemaicastronomy:| Diagrams of sphere models for variably strict conditionals (Lewis counterfactuals)
-            Author:| Richard Zach
-            E-mail:| rzach@ucalgary.ca
-           License:| Released under the LaTeX Project Public License v1.3c or later
-               See:| http://www.latex-project.org/lppl.txt
+
+ptolemaicastronomy
+==================
+
+Diagrams of sphere models for variably strict conditionals (Lewis
+counterfactuals)
+
+Author: Richard Zach
+E-mail: rzach@ucalgary.ca
+License: Released under the LaTeX Project Public License v1.3c or later
+See: http://www.latex-project.org/lppl.txt
+
+David K. Lewis (Counterfactuals, Blackwell 1973) introduced a sphere
+semantics for counterfactual conditionals. He jokingly referred to the
+diagrams depicting such sphere models as Ptolemaic astronomy, hence
+the name of this package. It has nothing to do with Ptolemy or with
+astronomy, sorry.
+
+The macros provided in this package aid in the construction of
+sphere model diagrams in the style of Lewis. The macros all make use
+of TikZ.
+
+for documentation and source code see
+https://github.com/rzach/ptolemaic-astronomy
 
 \endpreamble
 \postamble
@@ -158,11 +178,13 @@ Running "make install" installs the files in the local TeX tree.
 % \verb|innerfactor|)$. \verb|innerfactor| defaults to $0.4$.
 % Spheres are drawn in \verb|dotted| style by default. You can change
 % this by passing an option to \cmd{\spheresystem}, e.g.,
-% \verb|\spheresystem[dashed,red,layerwidth=.75]{3}| produces:
-%     \begin{center}\begin{tikzpicture}
-%       \spheresystem[dashed,red,layerwidth=.75]{3}
-%     \end{tikzpicture}\end{center}
-
+% to get red, dashed, thick lines and wider layers:
+% \begin{lstsample}{}{}
+%     \begin{tikzpicture}
+%       \spheresystem[dashed, red,
+%          thick, layerwidth=.75]{3}
+%     \end{tikzpicture}
+% \end{lstsample}
 % \DescribeMacro{\spherelayer} \DescribeMacro{\spherefill} These
 % macros shade the \meta{n}-th layer of the sphere model, or the
 % entire \meta{n}-th sphere. The fill defaults to \verb|lightgray| and
@@ -213,16 +235,16 @@ Running "make install" installs the files in the local TeX tree.
 
 % \begin{lstsample}{}{}
 %    \begin{tikzpicture}
-%      \proposition[green,proposition/.style={tension=3}]{0}{3}{80}{3}
+%      \proposition[green,
+%         proposition/.style={tension=3}]{0}{3}{80}{3}
 %      \proposition{0}{3}{80}{3}
-%      \proposition[red,proposition/.style={tension=1}]{0}{3}{80}{3}
-%      \proposition[blue,proposition/.style={tension=.5}]{0}{3}{80}{3}
+%      \proposition[red,
+%         proposition/.style={tension=1}]{0}{3}{80}{3}
+%      \proposition[blue,
+%         proposition/.style={tension=.5}]{0}{3}{80}{3}
 %      \spheresystem{5}
 %    \end{tikzpicture}
 % \end{lstsample}
-
-
-
 
 % \DescribeMacro{\spherepos}
 % \cmd{\spherepos}\marg{direction}\marg{n}\marg{code} moves to a
@@ -243,13 +265,17 @@ Running "make install" installs the files in the local TeX tree.
 % \DescribeMacro{\sphereintersect} \cmd{\propositionintersect} uses
 % \cmd{sphereintersect}\oarg{options}\marg{n}\marg{code} to fill the
 % area between the parabola and the outside of the \meta{n}-th
-% layer. That macro can also be used to intersect the respective layer
-% with other paths, and in cases where the convex closure of the
-% proposition does not include enough area. In that case, the clipping
-% path has to be extended, and the path drawn separately. The example
-% below shows what happens when a very wide parabola does not
-% completely intersect (on the right), and how to use this trick (on
-% the left).
+% layer. (More precisely: what happens is that the area between the
+% parabola and the line between its two endpoints is set as the
+% clipping glipping, and then TikZ only shows the shaded layer within
+% that clipping region.) That macro can also be used to intersect the
+% respective layer with other paths, and in cases where the convex
+% closure of the proposition does not include enough area.  In that
+% case, the clipping region has to be extended, and the path drawn
+% separately. The example below shows what happens when a very wide
+% parabola does not completely intersect (on the right), how to use
+% the trick to get the fill right(on the left), as well as
+% intersecting a more complex path with a sphere layer.
 
 % \begin{lstsample}{}{}
 %    \begin{tikzpicture}
@@ -277,25 +303,24 @@ Running "make install" installs the files in the local TeX tree.
 % \fi
 %
 %    \begin{macrocode}
-% ptolemaicastronomy.sty
-% for documentation and source code see
-% https://github.com/rzach/ptolemaic-astronomy
-
-\ProvidesPackage{ptolemaicastronomy}[2018/04/08 v1.00 Diagrams of
-  sphere models for variably strict conditionals (Lewis
-  counterfactuals)]
-                
 \RequirePackage{tikz}
+
 \tikzset{
   sphere/.style = {dotted},
   sphere intersection/.style = {fill=lightgray},
   sphere layer/.style = {fill=lightgray},
   proposition/.style={smooth,tension=1.7},
 }
+%    \end{macrocode}
+% \begin{macro}{layerwidth}
+% \begin{macro}{innerfactor}
+% TikZ parameters used to compute the sphere radii and can be set
+% using TikZ's options mechanism or using \cmd{\tikzset}.
+%    \begin{macrocode}
 \pgfkeyssetvalue{/tikz/layerwidth}{.5}
 \pgfkeyssetvalue{/tikz/innerfactor}{.4}
 %    \end{macrocode}
-%
+% \end{macro}\end{macro}
 % \begin{macro}{\sphereplot}
 % \cmd{\sphereplot}\marg{n} gives the plot codes for the \meta{n}-th sphere
 %    \begin{macrocode}
