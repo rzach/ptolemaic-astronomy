@@ -1,0 +1,397 @@
+% \iffalse meta-comment
+% vim: textwidth=75
+%<*internal>
+\iffalse
+%</internal>
+%<*readme>
+|
+------------------:| ------------------------------------------------------
+ptolemaicastronomy:| Diagrams of sphere models for variably strict conditionals (Lewis counterfactuals)
+            Author:| Richard Zach
+            E-mail:| rzach@ucalgary.ca
+           License:| Released under the LaTeX Project Public License v1.3c or later
+               See:| http://www.latex-project.org/lppl.txt
+
+
+David K. Lewis (Counterfactuals, Blackwell 1973) introduced a sphere
+semantics for counterfactual conditionals. He jokingly referred to the
+diagrams depicting such sphere models as Ptolemaic astronomy, hence
+the name of this package. It has nothing to do with Ptolemy or with
+astronomy, sorry.
+
+The macros provided in this package aid in the construction of
+sphere model diagrams in the style of Lewis. The macros all make use
+of TikZ.
+
+See https://github.com/rzach/ptolemaic-astronomy
+
+%</readme>
+%<*internal>
+\fi
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+%</internal>
+%<*install>
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\preamble
+------------------:| ------------------------------------------------------
+ptolemaicastronomy:| Diagrams of sphere models for variably strict conditionals (Lewis counterfactuals)
+            Author:| Richard Zach
+            E-mail:| rzach@ucalgary.ca
+           License:| Released under the LaTeX Project Public License v1.3c or later
+               See:| http://www.latex-project.org/lppl.txt
+
+\endpreamble
+\postamble
+
+Copyright (C) 2018 by Richard Zach <rzach@ucalgary.ca>
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License (LPPL), either
+version 1.3c of this license or (at your option) any later
+version.  The latest version of this license is in the file:
+
+http://www.latex-project.org/lppl.txt
+
+This work is "maintained" (as per LPPL maintenance status) by
+Richard Zach.
+
+This work consists of the file ptolemaicastronomy.dtx and a Makefile.
+Running "make" generates the derived files README, ptolemaicastronomy.pdf and ptolemaicastronomy.sty.
+Running "make inst" installs the files in the user's TeX tree.
+Running "make install" installs the files in the local TeX tree.
+
+\endpostamble
+
+\usedir{tex/latex/ptolemaicastronomy}
+\generate{
+  \file{\jobname.sty}{\from{\jobname.dtx}{package}}
+}
+%</install>
+%<install>\endbatchfile
+%<*internal>
+\usedir{source/latex/ptolemaicastronomy}
+\generate{
+  \file{\jobname.ins}{\from{\jobname.dtx}{install}}
+}
+\nopreamble\nopostamble
+\usedir{doc/latex/ptolemaicastronomy}
+\generate{
+  \file{README.txt}{\from{\jobname.dtx}{readme}}
+}
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{ptolemaicastronomy.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{ptolemaicastronomy}
+%<*package>
+    [2018/04/07 v1.00 Diagrams of sphere models for variably strict conditionals (Lewis counterfactuals)]
+%</package>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[numbered]{hypdoc}
+\usepackage{\jobname}
+\usepackage{lstdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \GetFileInfo{\jobname.dtx}
+% \DoNotIndex{\newcommand,\newenvironment}
+%
+%\title{\textsf{ptolemaicastronomy} --- Diagrams of sphere models for variably strict conditionals (Lewis counterfactuals)\thanks{This file
+%   describes version \fileversion, last revised \filedate.}
+%}
+%\author{Richard Zach\thanks{E-mail: rzach@ucalgary.ca}}
+%\date{Released \filedate}
+%
+%\maketitle
+%
+%\changes{v1.00}{2018/04/07}{First public release}
+%
+% \section{Introduction}
+
+% Lewis\footnote{David K. Lewis, \emph{Counterfactuals} (Blackwell
+% 1973)} introduced a sphere semantics for counterfactual
+% conditionals. He jokingly referred to the diagrams depicting such
+% sphere models as ``Ptolemaic astronomy,'' hence the name of this
+% package. It has nothing to do with Ptolemy or with astronomy, sorry.
+
+% The macros provided in this package aid in the construction of
+% sphere model diagrams in the style of Lewis. The macros all make use
+% of \href{https://ctan.org/tex-archive/graphics/pgf/}{Ti\emph{k}Z}.
+
+% Source code can be found at \url{https://github.com/rzach/ptolemaic-astronomy}
+%
+% \section{Usage}
+%
+% \DescribeMacro{\spheresystem}
+% To draw a sphere system with \meta{n} layers, say
+% \cmd{\spheresystem}\marg{n}:
+% \begin{lstsample}{}{}
+%    \begin{tikzpicture}
+%      \spheresystem{5}
+%    \end{tikzpicture}
+% \end{lstsample}
+% The width of each layer is determined by the TikZ parameter
+% \meta{layerwidth} and defaults to $.5$ TikZ units (so $0.5$ cm by
+% default). The radius of the center sphere is \emph{not}
+% \meta{layerwidth}, but $\meta{layerwidth} \times (1 -
+% \meta{innerfactor})$. \meta{innerfactor} defaults to $0.4$.
+% Spheres are drawn in \cs{dotted} style by default. You can change
+% this by passing an option to \cmd{\spheresystem}, e.g.,
+% \verb|\spheresystem[dashed,red]{3}| produces:
+%     \begin{center}\begin{tikzpicture}
+%       \spheresystem[dashed,red]{3}
+%     \end{tikzpicture}\end{center}
+
+% \DescribeMacro{\spherelayer} \DescribeMacro{\spherefill} These
+% macros shade the \meta{n}-th layer of the sphere model, or the
+% entire \meta{n}-th sphere. The fill defaults to \cs{lightgray} and
+% can be changed with options. Note that the fill extends to the
+% center of the layer boundary line, so you should fill first and then
+% draw the spheres. For instance:
+% \begin{lstsample}{}{}
+%    \begin{tikzpicture}
+%      \spherelayer{3}
+%      \spherefill[yellow]{1}
+%      \spheresystem[densely dashed]{3}
+%    \end{tikzpicture}
+% \end{lstsample}
+% \DescribeMacro{\proposition}
+% \DescribeMacro{\propositionintersect}
+
+% A proposition is a set of worlds which (usually) intersects with a
+% sphere system. A common way of drawing them is as a parabola, and
+% often we want to highlight the intersection of the proposition with
+% the closest sphere with which it intersects.
+% \cmd{\proposition}\marg{direction}\marg{n}\marg{width}\marg{length}
+% will draw such a parabola. \meta{direction} is the angle (0 is due
+% east and 90 is due north) from which you want the proposition to
+% reach into the sphere system. \meta{n} is the innermost layer you
+% want it to intersect. \meta{width} and \meta{length} describe the
+% triangle with apex \meta{width} degrees and sides of length
+% \meta{length}. Use \cmd{\propositionintersect} to also highlight the
+% intersection with the \meta{n}-th sphere. E.g., here are
+% propositions that intersects the 3rd layer at 45 degrees, with a
+% width of 20, 40, and 60 degrees, and the intersection of the first
+% one with the innermost sphere it intersects.
+
+% With the \verb|shift| option you can also position propositions outside the center, e.g., a proposition extending from the north through the west side of the sphere system would use, say, \verb|shift={(-1,-1)}|.
+
+% \begin{lstsample}{}{}
+%    \begin{tikzpicture}
+%      \propositionintersect{45}{3}{20}{3}
+%      \proposition{45}{3}{40}{3}
+%      \proposition{45}{3}{60}{3}
+%      \proposition[shift={(-1,-1)}]{90}{1}{20}{4}
+%      \spheresystem{5}
+%    \end{tikzpicture}
+% \end{lstsample}
+
+% \DescribeMacro{\spherepos}
+% \cmd{\spherepos}\marg{direction}\marg{n}\marg{code} moves to a
+% position in the center of layer \meta{n} in \meta{direction} and
+% then exectures TikZ \verb|path| code \meta{code}. It's useful to put
+% labels or other things into the sphere system.
+
+% \begin{lstsample}{}{}
+%    \begin{tikzpicture}
+%      \propositionintersect{45}{3}{20}{3}
+%      \spheresystem{5}
+%      \spherepos[fill,red]{45}{3}{circle[radius=.1]}
+%      \spherepos{90}{4}{node {$w$}}
+%      \spherepos{45}{6.5}{node {$\varphi$}}
+%    \end{tikzpicture}
+% \end{lstsample}
+
+%\StopEventually{^^A
+%  \PrintChanges
+%  \PrintIndex
+%}
+%
+% \section{Implementation}
+%
+% \iffalse
+%<*package>
+% \fi
+%
+%    \begin{macrocode}
+
+%% ptolemaicastronomy.sty
+%% for documentation and source code see
+%% https://github.com/rzach/ptolemaic-astronomy
+
+\ProvidesPackage{ptolemaicastronomy}[2018/04/07 v1.00 Diagrams of
+  sphere models for variably strict conditionals (Lewis
+  counterfactuals)]
+                
+\RequirePackage{tikz}
+\tikzset{
+  sphere/.style = {dotted},
+  sphere intersection/.style = {fill=lightgray},
+  sphere layer/.style = {fill=lightgray},
+  proposition/.style={smooth,tension=1.7},
+}
+\pgfkeyssetvalue{/tikz/layerwidth}{.5}
+\pgfkeyssetvalue{/tikz/innerfactor}{.4}
+%    \end{macrocode}
+%
+% \begin{macro}{\sphereplot}
+% \cmd{\sphereplot}\marg{n} gives the plot codes for the \meta{n}-th sphere
+%    \begin{macrocode}
+\newcommand{\sphereplot}[1]{
+  circle
+    [radius=(#1)*\pgfkeysvalueof{/tikz/layerwidth}-
+      \pgfkeysvalueof{/tikz/layerwidth}*\pgfkeysvalueof{/tikz/innerfactor}]
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\spheresystem}
+% \cmd{\spheresystem}\oarg{options}\marg{n} draws a sphere system centered at
+% the origin with \meta{n} number of layers
+%
+%    \begin{macrocode}
+\newcommand{\spheresystem}[2][]{
+  \foreach \i in {1,...,#2}{
+    \draw[sphere,#1] \sphereplot{\i} ;
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+
+%
+%
+% \begin{macro}{\spherelayer}
+% \cmd{\spherelayer}\oarg{options}\marg{n} shades the \meta{n}-th layer
+%    \begin{macrocode}
+\newcommand{\spherelayer}[2][]{
+  \begin{scope}[even odd rule]
+    \fill[#1,sphere layer]
+    \sphereplot{#2-1} \sphereplot{#2} ;
+  \end{scope}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\spherefill}
+%
+% \cmd{\spherefill}\oarg{options}\marg{n} fills the \meta{n}-th sphere
+%
+%    \begin{macrocode}
+\newcommand{\spherefill}[2][]{
+    \fill[sphere intersection,#1]
+    \sphereplot{#2} ;
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\sphereintersect}
+% \cmd{\sphereintersect}\oarg{options}\marg{path}\marg{n} draws the
+% \meta{path} and shades the area of the \meta{path} in the
+% \meta{n}-th sphere layer. Options only apply to the sphere
+% layer
+% \begin{macrocode}
+\newcommand{\sphereintersect}[3][]{
+  \begin{scope}[even odd rule]
+    \path[clip] #3;
+    \spherefill[#1]{#2}
+  \end{scope}
+  \draw #3;
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+%
+% \begin{macro}{\propositionplot}
+% \cmd{\propositionplot}\oarg{options}\marg{direction}\marg{n}\marg{width}\marg{length}
+% produces the \cs{plot} code for a proposition intersecting the \meta{n}-th layer in angle \meta{direction}
+% away from the center of the sphere system, with endpoints \meta{length}
+% away from the center at an angle of $\meta{direction} \pm \meta{width}/2$.
+%    \begin{macrocode}
+\newcommand{\propositionplot}[4]{
+  plot [proposition]
+  coordinates {+(#1+#3/2:#4)
+    +(#1:#2*\pgfkeysvalueof{/tikz/layerwidth}-
+    \pgfkeysvalueof{/tikz/layerwidth}*.9
+    -\pgfkeysvalueof{/tikz/layerwidth}*\pgfkeysvalueof{/tikz/innerfactor})
+    +(#1-#3/2:#4)}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\proposition}
+% \cmd{\proposition}\oarg{options}\marg{direction}\marg{n}\marg{width}\marg{length}
+% actually draws the proposition. Note that \meta{options} applies to
+% \cmd{\draw}, not to \cs{plot}. 
+%    \begin{macrocode}
+\newcommand{\proposition}[5][]{
+  \draw[proposition,#1] \propositionplot {#2}{#3}{#4}{#5} ;
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\propositionintersect}
+% \cmd{\spherepropositionintersect} does the same as \cmd{\sphereproposition} but
+% also shades the area of intersection with the \meta{n}-th sphere.
+%
+%    \begin{macrocode}
+\newcommand{\propositionintersect}[5][]{
+  \begin{scope}
+  \path[clip] \propositionplot{#2}{#3}{#4}{#5};
+  \spherefill[#1]{#3}
+  \end{scope}
+  \draw[proposition,#1] \propositionplot{#2}{#3}{#4}{#5};
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\spherepos}
+% \cmd{\spherepos}\oarg{options}\marg{direction}\marg{n}\marg{code}
+% shifts the scope to a position in the center of the nth layer in
+% direction angle from the center -- and then puts code
+% there.
+%\begin{macrocode}
+\newcommand{\spherepos}[4][]{
+  \begin{scope}[shift=(#2:#3*\pgfkeysvalueof{/tikz/layerwidth}-
+      \pgfkeysvalueof{/tikz/layerwidth}/2-
+        \pgfkeysvalueof{/tikz/layerwidth}*\pgfkeysvalueof{/tikz/innerfactor})]
+    \path[#1] #4 ;
+  \end{scope}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \iffalse
+%</package>
+% \fi
+%
+% \Finale
+\endinput
+
