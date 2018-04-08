@@ -98,7 +98,7 @@ Running "make install" installs the files in the local TeX tree.
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{ptolemaicastronomy}
 %<*package>
-    [2018/04/07 v1.00 Diagrams of sphere models for variably strict conditionals (Lewis counterfactuals)]
+    [2018/04/08 v1.00 Diagrams of sphere models for variably strict conditionals (Lewis counterfactuals)]
 %</package>
 %<*driver>
 \documentclass{ltxdoc}
@@ -125,7 +125,7 @@ Running "make install" installs the files in the local TeX tree.
 %
 %\maketitle
 %
-%\changes{v1.00}{2018/04/07}{First public release}
+%\changes{v1.00}{2018/04/08}{First public release}
 %
 % \section{Introduction}
 
@@ -152,21 +152,21 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{tikzpicture}
 % \end{lstsample}
 % The width of each layer is determined by the TikZ parameter
-% \meta{layerwidth} and defaults to $.5$ TikZ units (so $0.5$ cm by
+% \verb|layerwidth| and defaults to $.5$ TikZ units (so $0.5$ cm by
 % default). The radius of the center sphere is \emph{not}
-% \meta{layerwidth}, but $\meta{layerwidth} \times (1 -
-% \meta{innerfactor})$. \meta{innerfactor} defaults to $0.4$.
-% Spheres are drawn in \cs{dotted} style by default. You can change
+% \verb|layerwidth|, but $\verb|layerwidth| \times (1 -
+% \verb|innerfactor|)$. \verb|innerfactor| defaults to $0.4$.
+% Spheres are drawn in \verb|dotted| style by default. You can change
 % this by passing an option to \cmd{\spheresystem}, e.g.,
-% \verb|\spheresystem[dashed,red]{3}| produces:
+% \verb|\spheresystem[dashed,red,layerwidth=.75]{3}| produces:
 %     \begin{center}\begin{tikzpicture}
-%       \spheresystem[dashed,red]{3}
+%       \spheresystem[dashed,red,layerwidth=.75]{3}
 %     \end{tikzpicture}\end{center}
 
 % \DescribeMacro{\spherelayer} \DescribeMacro{\spherefill} These
 % macros shade the \meta{n}-th layer of the sphere model, or the
-% entire \meta{n}-th sphere. The fill defaults to \cs{lightgray} and
-% can be changed with options. Note that the fill extends to the
+% entire \meta{n}-th sphere. The fill defaults to \verb|lightgray| and
+% can be changed with \oarg{options}. Note that the fill extends to the
 % center of the layer boundary line, so you should fill first and then
 % draw the spheres. For instance:
 % \begin{lstsample}{}{}
@@ -207,6 +207,23 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{tikzpicture}
 % \end{lstsample}
 
+% The degree of ``pointedness'' of propositions is determined by the
+% \verb|tension| parameter, which defaults to $1.7$. Larger values
+% make the proposition more bulgy, smaller values more pointy.
+
+% \begin{lstsample}{}{}
+%    \begin{tikzpicture}
+%      \proposition[green,proposition/.style={tension=3}]{0}{3}{80}{3}
+%      \proposition{0}{3}{80}{3}
+%      \proposition[red,proposition/.style={tension=1}]{0}{3}{80}{3}
+%      \proposition[blue,proposition/.style={tension=.5}]{0}{3}{80}{3}
+%      \spheresystem{5}
+%    \end{tikzpicture}
+% \end{lstsample}
+
+
+
+
 % \DescribeMacro{\spherepos}
 % \cmd{\spherepos}\marg{direction}\marg{n}\marg{code} moves to a
 % position in the center of layer \meta{n} in \meta{direction} and
@@ -223,6 +240,31 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{tikzpicture}
 % \end{lstsample}
 
+% \DescribeMacro{\sphereintersect} \cmd{\propositionintersect} uses
+% \cmd{sphereintersect}\oarg{options}\marg{n}\marg{code} to fill the
+% area between the parabola and the outside of the \meta{n}-th
+% layer. That macro can also be used to intersect the respective layer
+% with other paths, and in cases where the convex closure of the
+% proposition does not include enough area. In that case, the clipping
+% path has to be extended, and the path drawn separately. The example
+% below shows what happens when a very wide parabola does not
+% completely intersect (on the right), and how to use this trick (on
+% the left).
+
+% \begin{lstsample}{}{}
+%    \begin{tikzpicture}
+%      \propositionintersect{0}{3}{140}{3}
+%      \sphereintersect{3}{\propositionplot{180}{3}{140}{3} -- (-2,-2)}
+%      \proposition{180}{3}{140}{3}
+%      \sphereintersect{4}{plot[smooth] coordinates
+%          {(1.5,2) (2.5,1) (1.5,0) (2.5,-1) (1.5,-2) (2.5,-3)}}
+%      \draw[red] plot[smooth] coordinates
+%          {(1.5,2) (2.5,1) (1.5,0) (2.5,-1) (1.5,-2) (2.5,-3)} ;
+%      \spheresystem{5}
+%    \end{tikzpicture}
+% \end{lstsample}
+
+
 %\StopEventually{^^A
 %  \PrintChanges
 %  \PrintIndex
@@ -235,12 +277,11 @@ Running "make install" installs the files in the local TeX tree.
 % \fi
 %
 %    \begin{macrocode}
+% ptolemaicastronomy.sty
+% for documentation and source code see
+% https://github.com/rzach/ptolemaic-astronomy
 
-%% ptolemaicastronomy.sty
-%% for documentation and source code see
-%% https://github.com/rzach/ptolemaic-astronomy
-
-\ProvidesPackage{ptolemaicastronomy}[2018/04/07 v1.00 Diagrams of
+\ProvidesPackage{ptolemaicastronomy}[2018/04/08 v1.00 Diagrams of
   sphere models for variably strict conditionals (Lewis
   counterfactuals)]
                 
@@ -309,17 +350,15 @@ Running "make install" installs the files in the local TeX tree.
 %
 %
 % \begin{macro}{\sphereintersect}
-% \cmd{\sphereintersect}\oarg{options}\marg{path}\marg{n} draws the
-% \meta{path} and shades the area of the \meta{path} in the
-% \meta{n}-th sphere layer. Options only apply to the sphere
-% layer
+% \cmd{\sphereintersect}\oarg{options}\marg{n}\marg{path} shades the
+% area between \meta{path} and the the \meta{n}-th sphere
+% layer. Options only apply to the sphere layer.
 % \begin{macrocode}
 \newcommand{\sphereintersect}[3][]{
   \begin{scope}[even odd rule]
     \path[clip] #3;
     \spherefill[#1]{#2}
   \end{scope}
-  \draw #3;
 }
 %    \end{macrocode}
 % \end{macro}
@@ -328,7 +367,7 @@ Running "make install" installs the files in the local TeX tree.
 %
 % \begin{macro}{\propositionplot}
 % \cmd{\propositionplot}\oarg{options}\marg{direction}\marg{n}\marg{width}\marg{length}
-% produces the \cs{plot} code for a proposition intersecting the \meta{n}-th layer in angle \meta{direction}
+% produces the \verb|plot| code for a proposition intersecting the \meta{n}-th layer in angle \meta{direction}
 % away from the center of the sphere system, with endpoints \meta{length}
 % away from the center at an angle of $\meta{direction} \pm \meta{width}/2$.
 %    \begin{macrocode}
@@ -373,8 +412,8 @@ Running "make install" installs the files in the local TeX tree.
 %
 % \begin{macro}{\spherepos}
 % \cmd{\spherepos}\oarg{options}\marg{direction}\marg{n}\marg{code}
-% shifts the scope to a position in the center of the nth layer in
-% direction angle from the center -- and then puts code
+% shifts the scope to a position in the center of the \meta{n}-th layer in
+% direction angle from the center---and then puts a \meta{code} \verb|path|
 % there.
 %\begin{macrocode}
 \newcommand{\spherepos}[4][]{
